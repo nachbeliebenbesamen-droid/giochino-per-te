@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Un gioco per te ❤️</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffeef0; text-align: center; padding: 30px; color: #d63384; margin: 0; }
+        .card { background: white; padding: 30px; border-radius: 20px; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 90%; margin-top: 50px; }
+        h1 { color: #ff4757; margin-bottom: 10px; }
+        p { font-size: 18px; line-height: 1.5; color: #4b4b4b; }
+        .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
+        button { background-color: #ff6b81; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; }
+        button:hover { background-color: #ff4757; transform: scale(1.02); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <div id="level1">
+            <h1>Ciao Amore! 💌</h1>
+            <p>Per sbloccare il tuo messaggio speciale, devi superare questa mini sfida. Pronto?</p>
+            <p><strong>Domanda 1:</strong> Dove ci siamo incontrati?</p>
+            <div class="btn-container">
+                <button onclick="nextLevel(1, false)">Sulla luna</button>
+                <button onclick="nextLevel(1, true)">Tiktok</button>
+                <button onclick="nextLevel(1, false)">Boh</button>
+            </div>
+        </div>
+
+        <div id="level2" class="hidden">
+            <h1>Esatto! 😉</h1>
+            <p><strong>Domanda 2:</strong> Qual è la cosa che mi manca di più di te?</p>
+            <div class="btn-container">
+                <button onclick="nextLevel(2, false)">I tuoi messaggi</button>
+                <button onclick="nextLevel(2, false)">Le tue attenzioni</button>
+                <button onclick="nextLevel(2, true)">Entrambi</button>
+            </div>
+        </div>
+
+        <div id="final" class="hidden">
+            <h1>Hai vinto il mio cuore! 🎉❤️</h1>
+            <p>Hai superato il test a pieni voti.</p>
+            <p>Anche se ci separano i km, sei sempre il mio pensiero preferito. Non vedo l'ora di vederti!</p>
+            <p style="font-size: 30px;">✈️👩‍❤️‍👨</p>
+        </div>
+    </div>
+
+    <script>
+        function nextLevel(currentLevel, isCorrect) {
+            if (isCorrect) {
+                document.getElementById('level' + currentLevel).classList.add('hidden');
+                let next = currentLevel + 1;
+                let nextElement = document.getElementById('level' + next);
+                
+                if (nextElement) {
+                    nextElement.classList.remove('hidden');
+                } else {
+                    document.getElementById('final').classList.remove('hidden');
+                }
+            } else {
+                alert("Risposta sbagliata! Dai, mi conosci meglio di così... Riprova! ❤️");
+            }
+        }
+    </script>
+</body>
+</html>
