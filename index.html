@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it">
 <head>
@@ -6,16 +7,28 @@
     <title>Un gioco per te ❤️</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #ffeef0; text-align: center; padding: 30px; color: #d63384; margin: 0; }
-        .card { background: white; padding: 30px; border-radius: 20px; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 90%; margin-top: 50px; }
+        .card { background: white; padding: 30px; border-radius: 20px; display: inline-block; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; width: 90%; margin-top: 20px; }
         h1 { color: #ff4757; margin-bottom: 10px; }
         p { font-size: 18px; line-height: 1.5; color: #4b4b4b; }
         .btn-container { display: flex; flex-direction: column; gap: 10px; margin-top: 20px; }
         button { background-color: #ff6b81; color: white; border: none; padding: 12px 20px; border-radius: 25px; cursor: pointer; font-size: 16px; font-weight: bold; transition: 0.2s; }
         button:hover { background-color: #ff4757; transform: scale(1.02); }
         .hidden { display: none; }
+
+        /* Stili aggiunti per Musica e Contatore */
+        .music-player { margin-bottom: 10px; }
+        .music-btn { background-color: #d63384; font-size: 14px; padding: 8px 16px; }
+        .countdown { background: #ffe0e6; padding: 15px; border-radius: 15px; margin-top: 20px; font-weight: bold; color: #ff4757; font-size: 18px; }
     </style>
 </head>
 <body>
+
+    <div class="music-player">
+        <audio id="bg-music" loop>
+            <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+        </audio>
+        <button class="music-btn" onclick="toggleMusic()" id="music-toggle">🎵 Metti la Musica</button>
+    </div>
 
     <div class="card">
         <div id="level1">
@@ -43,7 +56,13 @@
             <h1>Hai vinto il mio cuore! 🎉❤️</h1>
             <p>Hai superato il test a pieni voti.</p>
             <p>Anche se ci separano i km, sei sempre il mio pensiero preferito. Non vedo l'ora di vederti!</p>
-            <p style="font-size: 30px;">✈️👩‍❤️‍👨</p>
+            
+            <div class="countdown">
+                <p style="margin: 0 0 5px 0; font-size: 14px; color: #555;">Mancano al nostro prossimo incontro:</p>
+                <span id="timer">Caricamento...</span>
+            </div>
+
+            <p style="font-size: 30px; margin-top: 15px;">✈️👩‍❤️‍👨</p>
         </div>
     </div>
 
@@ -58,10 +77,46 @@
                     nextElement.classList.remove('hidden');
                 } else {
                     document.getElementById('final').classList.remove('hidden');
+                    startCountdown(); // Avvia il contatore alla fine
                 }
             } else {
                 alert("Risposta sbagliata! Dai, mi conosci meglio di così... Riprova! ❤️");
             }
+        }
+
+        // Gestione Musica
+        function toggleMusic() {
+            let music = document.getElementById('bg-music');
+            let btn = document.getElementById('music-toggle');
+            if (music.paused) {
+                music.play();
+                btn.innerHTML = "⏸️ Pausa Musica";
+            } else {
+                music.pause();
+                btn.innerHTML = "🎵 Metti la Musica";
+            }
+        }
+
+        // Gestione Contatore (Modifica la data qui sotto!)
+        function startCountdown() {
+            // Sostituisci questa data con il giorno in cui vi rivedrete (Anno-Mese-Giorno)
+            const targetDate = new Date("2026-10-02T00:00:00").getTime();
+
+            setInterval(function() {
+                const now = new Date().getTime();
+                const distance = targetDate - now;
+
+                if (distance < 0) {
+                    document.getElementById("timer").innerHTML = "Ci vediamo oggi! ❤️";
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+
+                document.getElementById("timer").innerHTML = days + " giorni, " + hours + " ore e " + minutes + " minuti";
+            }, 1000);
         }
     </script>
 </body>
